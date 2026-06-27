@@ -98,7 +98,7 @@ export default function ApiKeySettings() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-10 w-[400px] bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-slate-200/50 p-5 z-50 max-h-[80vh] overflow-y-auto">
+        <div className="fixed sm:absolute inset-x-4 sm:inset-x-auto sm:right-0 top-16 sm:top-10 sm:w-[400px] bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-slate-200/50 p-4 sm:p-5 z-50 max-h-[80vh] overflow-y-auto">
           <h3 className="text-sm font-bold text-slate-800 mb-0.5">AI 金鑰設定</h3>
           <p className="text-[10px] text-slate-400 mb-4">依序嘗試：Gemini → Groq → DeepSeek → ChatGPT</p>
 

@@ -420,12 +420,14 @@ export default function ImageAnalyzer() {
           {/* Row 2: Primary Color */}
           <div>
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5 block">主色佔比設定（選填）</label>
-            <div className="flex gap-3 items-center">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:items-center">
               <input type="text" placeholder="主色名（如：白色、深藍）" value={primaryColor} onChange={e => setPrimaryColor(e.target.value)}
-                className="w-40 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-100" />
-              <input type="range" min={10} max={90} value={primaryRatio} onChange={e => setPrimaryRatio(Number(e.target.value))}
-                className="flex-1 h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-sky-500" />
-              <span className="text-sm font-black text-sky-600 w-12 text-right">{primaryRatio}%</span>
+                className="w-full sm:w-40 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-100" />
+              <div className="flex items-center gap-2 flex-1">
+                <input type="range" min={10} max={90} value={primaryRatio} onChange={e => setPrimaryRatio(Number(e.target.value))}
+                  className="flex-1 h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-sky-500" />
+                <span className="text-sm font-black text-sky-600 w-12 text-right">{primaryRatio}%</span>
+              </div>
             </div>
           </div>
 
@@ -581,23 +583,23 @@ export default function ImageAnalyzer() {
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <div className="flex items-center justify-center gap-6">
-                    <div className="flex flex-col items-center gap-1.5 p-4 rounded-xl hover:bg-sky-50 transition-colors">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+                    <div className="flex flex-col items-center gap-1.5 p-4 rounded-xl hover:bg-sky-50 transition-colors w-full sm:w-auto">
                       <div className="text-3xl">📸</div>
                       <span className="text-xs font-bold text-slate-500">點擊上傳</span>
                     </div>
-                    <div className="w-px h-12 bg-slate-200" />
-                    <div className="flex flex-col items-center gap-1.5 p-4 rounded-xl hover:bg-violet-50 transition-colors cursor-default" onClick={e => e.stopPropagation()}>
+                    <div className="hidden sm:block w-px h-12 bg-slate-200" />
+                    <div className="flex flex-col items-center gap-1.5 p-4 rounded-xl hover:bg-violet-50 transition-colors cursor-default w-full sm:w-auto" onClick={e => e.stopPropagation()}>
                       <div className="text-3xl">📋</div>
                       <span className="text-xs font-bold text-violet-500">Ctrl+V 貼上截圖</span>
                     </div>
-                    <div className="w-px h-12 bg-slate-200" />
-                    <div className="flex flex-col items-center gap-1.5 p-4 rounded-xl hover:bg-emerald-50 transition-colors">
+                    <div className="hidden sm:block w-px h-12 bg-slate-200" />
+                    <div className="flex flex-col items-center gap-1.5 p-4 rounded-xl hover:bg-emerald-50 transition-colors w-full sm:w-auto">
                       <div className="text-3xl">🖱️</div>
                       <span className="text-xs font-bold text-slate-500">拖放圖片</span>
                     </div>
                   </div>
-                  <p className="text-[11px] text-slate-400">Win+Shift+S 截圖後直接 Ctrl+V 貼上，最快！</p>
+                  <p className="text-[11px] text-slate-400 text-center">截圖後直接 Ctrl+V 貼上，最快！</p>
                 </div>
               )}
             </div>
@@ -683,21 +685,21 @@ export default function ImageAnalyzer() {
       {/* Simulation + Download Bar */}
       {aiResult && previewSrc && (
         <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white font-black text-sm shadow-md shadow-pink-200">🎭</div>
               <h2 className="text-lg font-bold text-slate-800">配色模擬預覽</h2>
             </div>
-            <div className="flex gap-2">
-              <button onClick={generateSimulation} className="px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold shadow-md shadow-pink-200 hover:shadow-lg transition-all">
+            <div className="flex flex-wrap gap-2">
+              <button onClick={generateSimulation} className="px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold shadow-md shadow-pink-200 hover:shadow-lg transition-all active:scale-95">
                 {simGenerated ? '重新生成' : '生成模擬圖'}
               </button>
               {simGenerated && (
-                <button onClick={downloadSimImage} className="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold hover:bg-slate-200 transition-all">
+                <button onClick={downloadSimImage} className="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold hover:bg-slate-200 transition-all active:scale-95">
                   下載模擬圖
                 </button>
               )}
-              <button onClick={downloadReport} className="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 text-white text-xs font-bold shadow-md shadow-sky-200 hover:shadow-lg transition-all">
+              <button onClick={downloadReport} className="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 text-white text-xs font-bold shadow-md shadow-sky-200 hover:shadow-lg transition-all active:scale-95">
                 下載分析報告
               </button>
             </div>
