@@ -1,0 +1,64 @@
+{
+  "name": "modo-paint-planner",
+  "version": "1.0.0",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "electron": "electron .",
+    "electron:dev": "electron .",
+    "dist": "next build && electron-builder"
+  },
+  "build": {
+    "appId": "com.modo.paint-planner",
+    "productName": "MODO 超合繪配色規劃器",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      ".next/**/*",
+      "public/**/*",
+      "src/**/*",
+      "package.json",
+      "next.config.ts",
+      "tsconfig.json",
+      "postcss.config.mjs"
+    ],
+    "win": {
+      "target": "portable"
+    },
+    "extraResources": [
+      {
+        "from": "node_modules",
+        "to": "node_modules",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.106.0",
+    "@netlify/plugin-nextjs": "^5.15.12",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "allowScripts": {
+    "electron@33.4.11": true
+  }
+}
