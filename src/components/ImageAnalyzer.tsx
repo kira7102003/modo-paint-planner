@@ -831,7 +831,16 @@ export default function ImageAnalyzer() {
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-500">{m.colorSystem}</span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-50 text-sky-600 border border-sky-200">{m.finish}</span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {/* Primer */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-xl border-2 border-white shadow-md bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-sm">🎯</div>
+                    <div>
+                      <div className="text-[10px] text-slate-500 font-bold">底漆</div>
+                      <div className="text-[10px] text-slate-600 font-medium">{(m as unknown as Record<string, string>).primer || 'AI建議'}</div>
+                    </div>
+                  </div>
+                  {/* Base / Shadow / Highlight */}
                   {[
                     { label: '底色', color: 'sky', paint: m.basePaint },
                     { label: '陰影', color: 'violet', paint: m.shadowPaint },
