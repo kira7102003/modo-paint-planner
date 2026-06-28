@@ -186,8 +186,18 @@ export async function POST(req: NextRequest) {
 
   const primerNames: Record<string, string> = { white: '白色底漆(MK-白)', gray: '灰色底漆(MK-11)', black: '黑色底漆(MK-黑)', pink: '粉紅底漆(MK-19)', purple: '紫色底漆(MK-19紫)' };
   if (body.primerConfig) {
-    const pc = body.primerConfig;
-    extras.push(`【底漆配置】主體裝甲用${primerNames[pc.body] || '灰色底漆'}、武器暗色件用${primerNames[pc.weapon] || '黑色底漆'}、骨架關節用${primerNames[pc.frame] || '灰色底漆'}。workflow底漆步驟要分開噴不同底漆，說明哪些零件用哪種底漆`);
+    const pc = body.primerConfig as Record<string, string>;
+    const allAuto = Object.values(pc).every(v => v === 'auto');
+    if (allAuto) {
+      extras.push('【底漆】AI 根據各部位顏色自動建議最佳底漆顏色（淺色件用白底漆、深色件用黑底漆等），workflow要說明');
+    } else {
+      const resolvePrimer = (v: string) => {
+        if (v === 'auto') return 'AI自動建議';
+        if (v.startsWith('custom:')) return v.slice(7);
+        return primerNames[v] || v;
+      };
+      extras.push(`【底漆配置】主體裝甲用${resolvePrimer(pc.body)}、武器暗色件用${resolvePrimer(pc.weapon)}、骨架關節用${resolvePrimer(pc.frame)}。workflow底漆步驟要分開噴不同底漆，說明哪些零件用哪種底漆`);
+    }
   }
 
   if (body.customPrompt) extras.push(body.customPrompt);

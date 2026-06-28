@@ -56,7 +56,7 @@ export default function ImageAnalyzer() {
   const [paintType, setPaintType] = useState<'lacquer' | 'water'>('lacquer');
   const [applyMethod, setApplyMethod] = useState<'airbrush' | 'brush' | 'both'>('airbrush');
   const [customPrompt, setCustomPrompt] = useState('');
-  const [primerConfig, setPrimerConfig] = useState<{ body: string; weapon: string; frame: string }>({ body: 'white', weapon: 'black', frame: 'gray' });
+  const [primerConfig, setPrimerConfig] = useState<{ body: string; weapon: string; frame: string }>({ body: 'auto', weapon: 'auto', frame: 'auto' });
   const [savedPresets, setSavedPresets] = useState<{ name: string; prompt: string }[]>([]);
   const [showPresets, setShowPresets] = useState(false);
   const [presetName, setPresetName] = useState('');
@@ -438,18 +438,25 @@ export default function ImageAnalyzer() {
                   <div className="text-[10px] font-bold text-slate-500 mb-1.5">{icon} {label}</div>
                   <div className="flex flex-wrap gap-1">
                     {([
-                      { id: 'white', name: '白色', hex: '#F0F0F0' },
-                      { id: 'gray', name: '灰色', hex: '#808080' },
-                      { id: 'black', name: '黑色', hex: '#222222' },
+                      { id: 'auto', name: 'AI配', hex: '' },
+                      { id: 'white', name: '白', hex: '#F0F0F0' },
+                      { id: 'gray', name: '灰', hex: '#808080' },
+                      { id: 'black', name: '黑', hex: '#222222' },
                       { id: 'pink', name: '粉紅', hex: '#E8A0B0' },
-                      { id: 'purple', name: '紫色', hex: '#6B4C8A' },
+                      { id: 'purple', name: '紫', hex: '#6B4C8A' },
                     ]).map(p => (
                       <button key={p.id} onClick={() => setPrimerConfig(prev => ({ ...prev, [key]: p.id }))}
-                        className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-all ${primerConfig[key] === p.id ? 'bg-slate-800 text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200'}`}>
-                        <div className="w-3 h-3 rounded-sm border border-white/50" style={{ backgroundColor: p.hex }} />
+                        className={`flex items-center gap-1 px-1.5 py-1 rounded-lg text-[9px] font-bold transition-all ${primerConfig[key] === p.id ? 'bg-slate-800 text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200'}`}>
+                        {p.hex ? <div className="w-3 h-3 rounded-sm border border-white/50" style={{ backgroundColor: p.hex }} /> : <span>🤖</span>}
                         {p.name}
                       </button>
                     ))}
+                    <input type="text" placeholder="自訂"
+                      value={primerConfig[key].startsWith('custom:') ? primerConfig[key].slice(7) : ''}
+                      onChange={e => setPrimerConfig(prev => ({ ...prev, [key]: e.target.value ? `custom:${e.target.value}` : 'auto' }))}
+                      onClick={e => e.stopPropagation()}
+                      className={`w-14 px-1.5 py-1 rounded-lg text-[9px] border transition-all ${primerConfig[key].startsWith('custom:') ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-500 border-slate-200'}`}
+                    />
                   </div>
                 </div>
               ))}
