@@ -20,12 +20,12 @@ export function extractColorsFromCanvas(
 
   const colorMap = new Map<string, { r: number; g: number; b: number; count: number }>();
 
-  const step = Math.max(1, Math.floor(pixels.length / 4 / 10000));
+  const step = Math.max(1, Math.floor(pixels.length / 4 / 30000));
 
   for (let i = 0; i < pixels.length; i += 4 * step) {
-    const r = Math.round(pixels[i] / 16) * 16;
-    const g = Math.round(pixels[i + 1] / 16) * 16;
-    const b = Math.round(pixels[i + 2] / 16) * 16;
+    const r = Math.round(pixels[i] / 8) * 8;
+    const g = Math.round(pixels[i + 1] / 8) * 8;
+    const b = Math.round(pixels[i + 2] / 8) * 8;
     const a = pixels[i + 3];
 
     if (a < 128) continue;
@@ -78,17 +78,17 @@ function guessColorLabel(r: number, g: number, b: number): string {
   const lum = (r * 0.299 + g * 0.587 + b * 0.114);
   const sat = max === 0 ? 0 : (max - min) / max;
 
-  if (lum > 230 && sat < 0.1) return '白色';
-  if (lum < 30) return '黑色';
-  if (sat < 0.12 && lum > 160) return '淺灰';
-  if (sat < 0.12 && lum > 80) return '中灰';
-  if (sat < 0.12) return '深灰';
+  if (lum > 230 && sat < 0.15) return '白色';
+  if (lum < 25) return '黑色';
+  if (sat < 0.1 && lum > 160) return '淺灰';
+  if (sat < 0.1 && lum > 80) return '中灰';
+  if (sat < 0.1) return '深灰';
 
   let hue = 0;
   if (max === min) {
     hue = 0;
   } else if (max === r) {
-    hue = 60 * ((g - b) / (max - min)) % 360;
+    hue = (60 * ((g - b) / (max - min)) + 360) % 360;
   } else if (max === g) {
     hue = 60 * ((b - r) / (max - min)) + 120;
   } else {
@@ -96,9 +96,14 @@ function guessColorLabel(r: number, g: number, b: number): string {
   }
   if (hue < 0) hue += 360;
 
-  if (hue < 15 || hue >= 345) return '紅色';
+  // 金色：色相在黃橘之間 + 中等亮度 + 中高飽和
+  if (hue >= 30 && hue < 55 && lum > 100 && lum < 210 && sat > 0.3) return '金色';
+
+  if (hue < 10 || hue >= 350) return '紅色';
+  if (hue < 25) return '橘紅';
   if (hue < 40) return '橘色';
-  if (hue < 70) return '黃色';
+  if (hue < 55) return '黃色';
+  if (hue < 70) return '黃綠';
   if (hue < 160) return '綠色';
   if (hue < 200) return '青色';
   if (hue < 260) return '藍色';
