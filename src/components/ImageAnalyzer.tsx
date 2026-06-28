@@ -442,6 +442,7 @@ export default function ImageAnalyzer() {
                       { id: 'gray', name: '灰色', hex: '#808080' },
                       { id: 'black', name: '黑色', hex: '#222222' },
                       { id: 'pink', name: '粉紅', hex: '#E8A0B0' },
+                      { id: 'purple', name: '紫色', hex: '#6B4C8A' },
                     ]).map(p => (
                       <button key={p.id} onClick={() => setPrimerConfig(prev => ({ ...prev, [key]: p.id }))}
                         className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-all ${primerConfig[key] === p.id ? 'bg-slate-800 text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200'}`}>

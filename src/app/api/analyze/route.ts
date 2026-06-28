@@ -184,7 +184,7 @@ export async function POST(req: NextRequest) {
     extras.push(`主色佔比按圖片分析的比例分配，最大面積的顏色佔${body.primaryRatio || 75}%`);
   }
 
-  const primerNames: Record<string, string> = { white: '白色底漆(MK-白)', gray: '灰色底漆(MK-11)', black: '黑色底漆(MK-黑)', pink: '粉紅底漆(MK-19紫)' };
+  const primerNames: Record<string, string> = { white: '白色底漆(MK-白)', gray: '灰色底漆(MK-11)', black: '黑色底漆(MK-黑)', pink: '粉紅底漆(MK-19)', purple: '紫色底漆(MK-19紫)' };
   if (body.primerConfig) {
     const pc = body.primerConfig;
     extras.push(`【底漆配置】主體裝甲用${primerNames[pc.body] || '灰色底漆'}、武器暗色件用${primerNames[pc.weapon] || '黑色底漆'}、骨架關節用${primerNames[pc.frame] || '灰色底漆'}。workflow底漆步驟要分開噴不同底漆，說明哪些零件用哪種底漆`);
