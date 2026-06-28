@@ -179,7 +179,7 @@ export async function POST(req: NextRequest) {
   if (body.applyMethod) extras.push(`工法:${methods[body.applyMethod] || '噴漆'}`);
 
   if (body.primaryColor) {
-    extras.push(`【重要】主色要求：整機的「${body.primaryColor}」色區域佔比必須達到${body.primaryRatio || 75}%以上。配色方案的colorMapping中，主色相關的zone要佔最大比例，其他顏色作為點綴`);
+    extras.push(`【重要-主色規則】整機必須以「${body.primaryColor}」為絕對主色，佔全機面積${body.primaryRatio || 75}%以上。「${body.primaryColor}」可能是顏色名稱(如白色、深藍)或MODO色號名稱(如機甲白=M-061、摩多藍=M-066)。colorMapping中主色zone必須是面積最大的，其他色只是點綴。所有裝甲主體都要用這個主色`);
   } else {
     extras.push(`主色佔比按圖片分析的比例分配，最大面積的顏色佔${body.primaryRatio || 75}%`);
   }

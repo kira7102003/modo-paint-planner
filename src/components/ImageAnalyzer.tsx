@@ -72,15 +72,21 @@ export default function ImageAnalyzer() {
     } catch { /* ignore */ }
   }, []);
 
-  const callAi = useCallback(async (extractedColors: ExtractedColor[], name: string) => {
+  const callAi = useCallback(async (extractedColorsInput?: ExtractedColor[], nameInput?: string) => {
+    const colorsToUse = extractedColorsInput || colors;
+    const nameToUse = nameInput || modelName;
+    if (!colorsToUse.length) return;
+
     setState('ai-loading');
+    setError('');
+    setSimGenerated(false);
     try {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          modelName: name || '未命名模型',
-          extractedColors,
+          modelName: nameToUse || '未命名模型',
+          extractedColors: colorsToUse,
           refColors: refColors.length > 0 ? refColors : undefined,
           paintType,
           applyMethod,
@@ -107,7 +113,7 @@ export default function ImageAnalyzer() {
       setError(e instanceof Error ? e.message : 'AI 分析失敗');
       setState('error');
     }
-  }, []);
+  }, [colors, modelName, refColors, paintType, applyMethod, primerConfig, customPrompt, primaryColor, primaryRatio]);
 
   const analyze = useCallback(async (src: string) => {
     setState('loading');
@@ -711,6 +717,17 @@ export default function ImageAnalyzer() {
               </div>
             ))}
           </div>
+
+          {/* Re-analyze button */}
+          {(state === 'done' || state === 'error') && (
+            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <button onClick={() => callAi()}
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 text-white text-xs font-bold shadow-md shadow-violet-200 hover:shadow-lg transition-all active:scale-95">
+                重新分析（套用新設定）
+              </button>
+              <p className="text-[10px] text-slate-400">修改上面的風格/底漆/主色/提示詞後，按此重跑 AI 分析，舊結果會保留直到新結果出來</p>
+            </div>
+          )}
         </div>
       )}
 
