@@ -18,10 +18,10 @@ ${extras}
     {
       "zone": "具體部位名稱如白色裝甲",
       "colorSystem": "該部位的色系質感描述",
-      "primer": "該部位建議的底漆顏色和色號(如 白色底漆MK-白)",
-      "basePaint": {"code": "MODO色號", "name": "中文顏色名", "hex": "#色碼"},
-      "shadowPaint": {"code": "MODO色號", "name": "中文顏色名", "hex": "#色碼"},
-      "highlightPaint": {"code": "MODO色號", "name": "中文顏色名", "hex": "#色碼"},
+      "primer": "該部位底漆(如 白色底漆MK-白)",
+      "basePaint": {"code": "MODO色號", "name": "顏色名", "hex": "#色碼", "mix": "若需混色寫比例如 M-061:M-004=9:1，單色寫 純色"},
+      "shadowPaint": {"code": "主要色號", "name": "顏色名", "hex": "#色碼", "mix": "混色比例如 M-003:M-002=8:2"},
+      "highlightPaint": {"code": "主要色號", "name": "顏色名", "hex": "#色碼", "mix": "混色比例如 M-003:M-015=7:3"},
       "finish": "亮光或半消光或消光或金屬"
     }
   ],
@@ -48,7 +48,8 @@ ${extras}
 - colorMapping根據圖片顏色對應
 - sharpnessTechniques每項要寫具體工具+具體色號+具體手法，不要泛泛而談
 - thinRatio要針對該步驟的漆料特性建議，不同漆不同比例(如陰影色建議更稀1:4利於疊層漸變，底漆1:1.5，一般色1:2.5)
-- troubleshooting要寫實際會遇到的問題和具體解法`;
+- troubleshooting要寫實際會遇到的問題和具體解法
+- colorMapping每個paint的mix欄位：單色直接用寫「純色」，需要混色的寫具體比例如「M-061:M-004=9:1」「M-003:M-002=8:2」，陰影和高光通常是混色`;
 }
 
 async function callGemini(apiKey: string, prompt: string): Promise<string> {
@@ -201,7 +202,9 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  if (body.customPrompt) extras.push(body.customPrompt);
+  if (body.customPrompt) {
+    extras.push(`【使用者特別要求-必須遵守】${body.customPrompt}。此為使用者的明確指示，colorMapping和workflow都必須反映這些要求`);
+  }
 
   extras.push('每步驟根據漆料和工法自動建議最佳稀釋比例');
 

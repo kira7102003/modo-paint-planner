@@ -108,11 +108,11 @@ export const modoPaints: ModoPaint[] = [
   { id: 'mx05', code: 'MX-05', nameZh: '機械金', nameEn: 'Robot Gold', hex: '#C5A54E', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '機械'] },
   { id: 'mx06', code: 'MX-06', nameZh: '赤金', nameEn: 'Pure Gold', hex: '#E8B830', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金'] },
   { id: 'mx07', code: 'MX-07', nameZh: '青金', nameEn: 'Bronze Gold', hex: '#B8860B', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '青銅'] },
-  { id: 'mx08', code: 'MX-08', nameZh: '香檳金', nameEn: 'Champagne Gold', hex: '#F7E7CE', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '香檳'] },
-  { id: 'mx09', code: 'MX-09', nameZh: '玫瑰金', nameEn: 'Rose Gold', hex: '#B76E79', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '玫瑰'] },
-  { id: 'mx10', code: 'MX-10', nameZh: '亮銀', nameEn: 'Bright Silver', hex: '#D0D0D0', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '銀'] },
-  { id: 'mx11', code: 'MX-11', nameZh: '槍鐵', nameEn: 'Gun Metal', hex: '#3C3C3C', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鐵', '槍'] },
-  { id: 'mx12', code: 'MX-12', nameZh: '星光鋁', nameEn: 'Star Aluminium', hex: '#A8A9AD', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鋁', '銀'] },
+  { id: 'mx10', code: 'MX-10', nameZh: '香檳金', nameEn: 'Champagne Gold', hex: '#F7E7CE', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '香檳'] },
+  { id: 'mx11', code: 'MX-11', nameZh: '玫瑰金', nameEn: 'Rose Gold', hex: '#B76E79', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '玫瑰'] },
+  { id: 'mx19', code: 'MX-19', nameZh: '亮銀', nameEn: 'Bright Silver', hex: '#D0D0D0', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '銀'] },
+  { id: 'mx20', code: 'MX-20', nameZh: '槍鐵', nameEn: 'Gun Metal', hex: '#3C3C3C', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鐵', '槍'] },
+  { id: 'mx23', code: 'MX-23', nameZh: '星光鋁', nameEn: 'Starlight Aluminium', hex: '#A8A9AD', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鋁', '銀'] },
 
   // MX 系列 - 金屬色源 Astro Lab
   { id: 'mx41', code: 'MX-41', nameZh: '色源紅', nameEn: 'Metal Source Red', hex: '#CC3333', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '紅'] },
@@ -162,11 +162,42 @@ export const modoPaints: ModoPaint[] = [
   // ============================================
   // 超合繪 Super Chrome 系列
   // ============================================
-  { id: 'sc01', code: 'SC-01', nameZh: '究極黑', nameEn: 'Ultimate Black', hex: '#050505', series: 'T', finish: 'gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '黑'] },
-  { id: 'sc02', code: 'SC-02', nameZh: '銀角', nameEn: 'Silver Horn', hex: '#E0E0E0', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '銀'] },
-  { id: 'sc03', code: 'SC-03', nameZh: '金角', nameEn: 'Gold Horn', hex: '#DAA520', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '金'] },
-  { id: 'sc04', code: 'SC-04', nameZh: '赤角', nameEn: 'Red Horn', hex: '#CC2222', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '紅'] },
-  { id: 'sc05', code: 'SC-05', nameZh: '青角', nameEn: 'Blue Horn', hex: '#2244BB', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '藍'] },
+  { id: 't230', code: 'T-230', nameZh: '金角金COAT', nameEn: 'Gold Horn Gold Coat', hex: '#DAA520', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '金'] },
+  { id: 't234', code: 'T-234', nameZh: '究極黑', nameEn: 'Ultimate Black', hex: '#050505', series: 'T', finish: 'gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '黑'] },
+  { id: 't235', code: 'T-235', nameZh: '赤角透明紅', nameEn: 'Red Horn Clear Red', hex: '#CC2222', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '紅'] },
+  { id: 't236', code: 'T-236', nameZh: '青角透明藍', nameEn: 'Blue Horn Clear Blue', hex: '#2244BB', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '藍'] },
+  { id: 't239', code: 'T-239', nameZh: '銀角超級電鍍銀', nameEn: 'Silver Horn Super Chrome', hex: '#E0E0E0', series: 'T', finish: 'chrome', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['超合繪', '電鍍', '銀'] },
+
+  // ============================================
+  // M 系列 - Robot II 色 (Robot II Colors)
+  // ============================================
+  { id: 'm131', code: 'M-131', nameZh: '石榴紅', nameEn: 'Pomegranate Red', hex: '#8B2500', series: 'M', finish: 'gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['Robot II', '紅'] },
+  { id: 'm132', code: 'M-132', nameZh: '淺緋', nameEn: 'Light Crimson', hex: '#DC6B6B', series: 'M', finish: 'semi-gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['Robot II', '紅'] },
+  { id: 'm133', code: 'M-133', nameZh: '機械灰', nameEn: 'Mechanical Gray', hex: '#6E6E6E', series: 'M', finish: 'semi-gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['Robot II', '灰', '機械'] },
+  { id: 'm134', code: 'M-134', nameZh: '海松綠', nameEn: 'Sea Pine Green', hex: '#2E5E4E', series: 'M', finish: 'semi-gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['Robot II', '綠'] },
+  { id: 'm135', code: 'M-135', nameZh: '柳茶綠', nameEn: 'Willow Tea Green', hex: '#8B9E5B', series: 'M', finish: 'semi-gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['Robot II', '綠'] },
+  { id: 'm137', code: 'M-137', nameZh: '葵紫', nameEn: 'Sunflower Purple', hex: '#6A4B82', series: 'M', finish: 'semi-gloss', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['Robot II', '紫'] },
+
+  // ============================================
+  // M 系列 - 螢光色追加 (Fluorescent Colors Addition)
+  // ============================================
+  { id: 'm099', code: 'M-099', nameZh: '螢光藍', nameEn: 'Fluorescent Blue', hex: '#1E90FF', series: 'M', finish: 'fluorescent', type: 'lacquer', opacity: 'semi-opaque', volume: 30, tags: ['螢光色', '藍'] },
+
+  // ============================================
+  // MX 系列 - 金屬色追加 (Metallic Colors Addition)
+  // ============================================
+  { id: 'mx04', code: 'MX-04', nameZh: '鈦銀', nameEn: 'Titanium Silver', hex: '#B8B8C8', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '銀', '鈦'] },
+  { id: 'mx08', code: 'MX-08', nameZh: '鈦合金', nameEn: 'Titanium Alloy', hex: '#7A7A8A', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鈦'] },
+  { id: 'mx09', code: 'MX-09', nameZh: '銅色', nameEn: 'Copper', hex: '#B87333', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '銅'] },
+  { id: 'mx12', code: 'MX-12', nameZh: '鈰金', nameEn: 'Cerium Gold', hex: '#C5A54E', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金'] },
+  { id: 'mx21', code: 'MX-21', nameZh: '星光銀', nameEn: 'Starlight Silver', hex: '#C0C8D0', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '銀', '星光'] },
+  { id: 'mx22', code: 'MX-22', nameZh: '星光金', nameEn: 'Starlight Gold', hex: '#C8B060', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '金', '星光'] },
+  { id: 'mx24', code: 'MX-24', nameZh: '星光黃銅', nameEn: 'Starlight Brass', hex: '#B5A642', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '黃銅', '星光'] },
+  { id: 'mx25', code: 'MX-25', nameZh: '星光鐵', nameEn: 'Starlight Iron', hex: '#5A5A68', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鐵', '星光'] },
+  { id: 'mx33', code: 'MX-33', nameZh: '金屬紅', nameEn: 'Metallic Red', hex: '#CC3333', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '紅'] },
+  { id: 'mx34', code: 'MX-34', nameZh: '金屬深藍', nameEn: 'Metallic Dark Blue', hex: '#2A3D66', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '藍'] },
+  { id: 'mx36', code: 'MX-36', nameZh: '金屬綠', nameEn: 'Metallic Green', hex: '#2E6E4E', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '綠'] },
+  { id: 'mx37', code: 'MX-37', nameZh: '金屬紫', nameEn: 'Metallic Purple', hex: '#6A3D8A', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '紫'] },
 ];
 
 export function getPaintById(id: string): ModoPaint | undefined {

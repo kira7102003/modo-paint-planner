@@ -845,17 +845,21 @@ export default function ImageAnalyzer() {
                     { label: '底色', color: 'sky', paint: m.basePaint },
                     { label: '陰影', color: 'violet', paint: m.shadowPaint },
                     { label: '高光', color: 'amber', paint: m.highlightPaint },
-                  ].map(({ label, color, paint }) => (
-                    <div key={label} className="flex items-center gap-2">
-                      <div className={`w-10 h-10 rounded-xl border-2 border-white shadow-md ring-2 ring-${color}-200`} style={{ backgroundColor: paint.hex }}>
-                        <span className="text-[7px] font-black flex items-center justify-center h-full" style={{ color: getContrastColor(paint.hex) }}>{paint.code}</span>
+                  ].map(({ label, color, paint }) => {
+                    const mix = (paint as unknown as Record<string, string>).mix;
+                    return (
+                      <div key={label} className="flex items-center gap-2">
+                        <div className={`w-10 h-10 rounded-xl border-2 border-white shadow-md ring-2 ring-${color}-200`} style={{ backgroundColor: paint.hex }}>
+                          <span className="text-[7px] font-black flex items-center justify-center h-full" style={{ color: getContrastColor(paint.hex) }}>{paint.code}</span>
+                        </div>
+                        <div>
+                          <div className={`text-[10px] text-${color}-500 font-bold`}>{label}</div>
+                          <div className="text-[10px] text-slate-600 font-medium">{paint.name}</div>
+                          {mix && mix !== '純色' && <div className="text-[9px] text-slate-400 font-mono">{mix}</div>}
+                        </div>
                       </div>
-                      <div>
-                        <div className={`text-[10px] text-${color}-500 font-bold`}>{label}</div>
-                        <div className="text-[10px] text-slate-600 font-medium">{paint.name}</div>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -1037,16 +1041,22 @@ export default function ImageAnalyzer() {
                         { label: '底色 Base', paint: m.basePaint, bg: 'bg-sky-50', border: 'border-sky-200', text: 'text-sky-600' },
                         { label: '陰影 Shadow', paint: m.shadowPaint, bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-600' },
                         { label: '高光 Highlight', paint: m.highlightPaint, bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-600' },
-                      ].map(({ label, paint, bg, border, text }) => (
-                        <div key={label} className={`flex items-center gap-3 ${bg} rounded-xl p-2.5 border ${border}`}>
-                          <div className="w-12 h-12 rounded-xl border-2 border-white shadow-md" style={{ backgroundColor: paint.hex }} />
-                          <div>
-                            <div className={`text-[9px] ${text} font-bold`}>{label}</div>
-                            <div className="text-xs font-bold text-slate-700">{paint.code} {paint.name}</div>
-                            <div className="text-[10px] font-mono text-slate-400">{paint.hex}</div>
+                      ].map(({ label, paint, bg, border, text }) => {
+                        const mix = (paint as unknown as Record<string, string>).mix;
+                        return (
+                          <div key={label} className={`flex items-center gap-3 ${bg} rounded-xl p-2.5 border ${border}`}>
+                            <div className="w-12 h-12 rounded-xl border-2 border-white shadow-md" style={{ backgroundColor: paint.hex }} />
+                            <div>
+                              <div className={`text-[9px] ${text} font-bold`}>{label}</div>
+                              <div className="text-xs font-bold text-slate-700">{paint.code} {paint.name}</div>
+                              <div className="text-[10px] font-mono text-slate-400">{paint.hex}</div>
+                              {mix && mix !== '純色' && (
+                                <div className="text-[10px] font-bold text-orange-500 mt-0.5">調色：{mix}</div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
 
                     {/* Right: layered preview */}
