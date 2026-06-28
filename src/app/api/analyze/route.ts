@@ -6,10 +6,10 @@ function buildPrompt(modelName: string, colorList: string, extras: string) {
 ${extras}
 回覆純JSON。欄位填真實中文內容。
 {"styleScope":{"title":"風格標題","features":["特徵1說明","特徵2說明","特徵3說明"]},"colorMapping":[{"zone":"部位","colorSystem":"色系","primer":"底漆如MK-11","basePaint":{"code":"M-xxx","name":"名","hex":"#xxx","mix":"純色或M-061:M-004=9:1"},"shadowPaint":{"code":"M-xxx","name":"名","hex":"#xxx","mix":"比例"},"highlightPaint":{"code":"M-xxx","name":"名","hex":"#xxx","mix":"比例"},"finish":"質感"}],"sharpnessTechniques":{"edgeHighlight":"具體筆具+色號+位置","panelLining":"滲線液種類+方式","metallicBlocking":"部位+金屬色+技法"},"materialsChecklist":{"paints":["漆"],"decalTools":["工具"],"clearCoats":["保護漆"]},"workflow":[{"step":1,"phase":"名","phaseEn":"EN","description":"說明","paints":["色號"],"thinRatio":"比例","tools":"工具","dryTime":"時間"}],"troubleshooting":[{"problem":"問題","solution":"解法"}],"summary":["心得1","心得2","心得3"]}
-規則：色號M-xxx/MX-xx/T-xxx。workflow15步。陰影高光要混色比例。提示詞提到的顏色也要配色。`;
+規則：色號M-xxx/MX-xx/T-xxx。workflow10步。混色比例。提示詞的顏色也配。`;
 }
 
-async function callWithRetry(fn: () => Promise<string>, retries = 2, delay = 20000): Promise<string> {
+async function callWithRetry(fn: () => Promise<string>, retries = 3, delay = 60000): Promise<string> {
   for (let i = 0; i <= retries; i++) {
     try {
       return await fn();
@@ -39,7 +39,7 @@ async function callGemini(apiKey: string, prompt: string): Promise<string> {
 async function callGroq(apiKey: string, prompt: string): Promise<string> {
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-    body: JSON.stringify({ model: 'gemma2-9b-it', messages: [{ role: 'user', content: prompt }], temperature: 0.6, max_tokens: 4096 }),
+    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.6, max_tokens: 8000 }),
     signal: AbortSignal.timeout(90000) });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `Groq ${res.status}`); }
   const d = await res.json();
@@ -49,7 +49,7 @@ async function callGroq(apiKey: string, prompt: string): Promise<string> {
 async function callDeepSeek(apiKey: string, prompt: string): Promise<string> {
   const res = await fetch('https://api.deepseek.com/chat/completions', {
     method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-    body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 4096 }),
+    body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 8000 }),
     signal: AbortSignal.timeout(90000) });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `DeepSeek ${res.status}`); }
   const d = await res.json();
@@ -59,7 +59,7 @@ async function callDeepSeek(apiKey: string, prompt: string): Promise<string> {
 async function callOpenAI(apiKey: string, prompt: string): Promise<string> {
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-    body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 4096 }),
+    body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 8000 }),
     signal: AbortSignal.timeout(60000) });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `OpenAI ${res.status}`); }
   const d = await res.json();
