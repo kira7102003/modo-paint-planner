@@ -178,8 +178,16 @@ export async function POST(req: NextRequest) {
   const methods: Record<string, string> = { airbrush: '噴漆', brush: '筆塗(薄塗多層,同方向)', both: '噴漆+筆塗混合' };
   if (body.applyMethod) extras.push(`工法:${methods[body.applyMethod] || '噴漆'}`);
 
-  if (body.primaryColor && body.primaryRatio) {
-    extras.push(`主色${body.primaryColor}佔${body.primaryRatio}%`);
+  if (body.primaryColor) {
+    extras.push(`【重要】主色要求：整機的「${body.primaryColor}」色區域佔比必須達到${body.primaryRatio || 75}%以上。配色方案的colorMapping中，主色相關的zone要佔最大比例，其他顏色作為點綴`);
+  } else {
+    extras.push(`主色佔比按圖片分析的比例分配，最大面積的顏色佔${body.primaryRatio || 75}%`);
+  }
+
+  const primerNames: Record<string, string> = { white: '白色底漆(MK-白)', gray: '灰色底漆(MK-11)', black: '黑色底漆(MK-黑)', pink: '粉紅底漆(MK-19紫)' };
+  if (body.primerConfig) {
+    const pc = body.primerConfig;
+    extras.push(`【底漆配置】主體裝甲用${primerNames[pc.body] || '灰色底漆'}、武器暗色件用${primerNames[pc.weapon] || '黑色底漆'}、骨架關節用${primerNames[pc.frame] || '灰色底漆'}。workflow底漆步驟要分開噴不同底漆，說明哪些零件用哪種底漆`);
   }
 
   if (body.customPrompt) extras.push(body.customPrompt);

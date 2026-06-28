@@ -56,6 +56,7 @@ export default function ImageAnalyzer() {
   const [paintType, setPaintType] = useState<'lacquer' | 'water'>('lacquer');
   const [applyMethod, setApplyMethod] = useState<'airbrush' | 'brush' | 'both'>('airbrush');
   const [customPrompt, setCustomPrompt] = useState('');
+  const [primerConfig, setPrimerConfig] = useState<{ body: string; weapon: string; frame: string }>({ body: 'white', weapon: 'black', frame: 'gray' });
   const [savedPresets, setSavedPresets] = useState<{ name: string; prompt: string }[]>([]);
   const [showPresets, setShowPresets] = useState(false);
   const [presetName, setPresetName] = useState('');
@@ -83,9 +84,10 @@ export default function ImageAnalyzer() {
           refColors: refColors.length > 0 ? refColors : undefined,
           paintType,
           applyMethod,
+          primerConfig,
           customPrompt: customPrompt.trim() || undefined,
           primaryColor: primaryColor || undefined,
-          primaryRatio: primaryColor ? primaryRatio : undefined,
+          primaryRatio,
           geminiKey: localStorage.getItem('gemini_key') || '',
           groqKey: localStorage.getItem('groq_key') || '',
           deepseekKey: localStorage.getItem('deepseek_key') || '',
@@ -417,9 +419,39 @@ export default function ImageAnalyzer() {
             </div>
           </div>
 
-          {/* Row 2: Primary Color */}
+          {/* Row 2: Primer Config */}
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5 block">主色佔比設定（選填）</label>
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5 block">底漆配置</label>
+            <div className="grid grid-cols-3 gap-2">
+              {([
+                { key: 'body' as const, label: '主體裝甲', icon: '🛡️' },
+                { key: 'weapon' as const, label: '武器/暗色件', icon: '🔫' },
+                { key: 'frame' as const, label: '骨架/關節', icon: '⚙️' },
+              ]).map(({ key, label, icon }) => (
+                <div key={key} className="bg-slate-50 rounded-xl p-2.5 border border-slate-200">
+                  <div className="text-[10px] font-bold text-slate-500 mb-1.5">{icon} {label}</div>
+                  <div className="flex flex-wrap gap-1">
+                    {([
+                      { id: 'white', name: '白色', hex: '#F0F0F0' },
+                      { id: 'gray', name: '灰色', hex: '#808080' },
+                      { id: 'black', name: '黑色', hex: '#222222' },
+                      { id: 'pink', name: '粉紅', hex: '#E8A0B0' },
+                    ]).map(p => (
+                      <button key={p.id} onClick={() => setPrimerConfig(prev => ({ ...prev, [key]: p.id }))}
+                        className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-all ${primerConfig[key] === p.id ? 'bg-slate-800 text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200'}`}>
+                        <div className="w-3 h-3 rounded-sm border border-white/50" style={{ backgroundColor: p.hex }} />
+                        {p.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 3: Primary Color */}
+          <div>
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5 block">主色佔比設定</label>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:items-center">
               <input type="text" placeholder="主色名（如：白色、深藍）" value={primaryColor} onChange={e => setPrimaryColor(e.target.value)}
                 className="w-full sm:w-40 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-100" />
