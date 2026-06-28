@@ -42,7 +42,7 @@ export function extractColorsFromCanvas(
   const sorted = Array.from(colorMap.values()).sort((a, b) => b.count - a.count);
 
   const clusters: { r: number; g: number; b: number; count: number }[] = [];
-  const minDist = 50;
+  const minDist = 35;
 
   for (const color of sorted) {
     const tooClose = clusters.some(c => {

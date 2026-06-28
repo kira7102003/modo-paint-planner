@@ -120,7 +120,7 @@ export default function ImageAnalyzer() {
     setError('');
     try {
       const canvas = await loadImageToCanvas(src);
-      const extracted = extractColorsFromCanvas(canvas, 8);
+      const extracted = extractColorsFromCanvas(canvas, 10);
       if (extracted.length === 0) {
         setError('無法從圖片中提取顏色，請換一張圖片試試');
         setState('error');
@@ -144,7 +144,7 @@ export default function ImageAnalyzer() {
       setRefPreviewSrc(src);
       try {
         const canvas = await loadImageToCanvas(src);
-        const extracted = extractColorsFromCanvas(canvas, 8);
+        const extracted = extractColorsFromCanvas(canvas, 10);
         setRefColors(extracted);
       } catch { /* ignore */ }
     };

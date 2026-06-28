@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
   }
 
   const colorList = extractedColors
-    .slice(0, 6)
+    .slice(0, 8)
     .map((c: { hex: string; label: string; percentage: number }, i: number) =>
       `${i + 1}. ${c.hex}(${c.label},${c.percentage}%)`
     )

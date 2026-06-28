@@ -114,14 +114,14 @@ export const modoPaints: ModoPaint[] = [
   { id: 'mx20', code: 'MX-20', nameZh: '槍鐵', nameEn: 'Gun Metal', hex: '#3C3C3C', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鐵', '槍'] },
   { id: 'mx23', code: 'MX-23', nameZh: '星光鋁', nameEn: 'Starlight Aluminium', hex: '#A8A9AD', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色', '鋁', '銀'] },
 
-  // MX 系列 - 金屬色源 Astro Lab
-  { id: 'mx41', code: 'MX-41', nameZh: '色源紅', nameEn: 'Metal Source Red', hex: '#CC3333', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '紅'] },
-  { id: 'mx42', code: 'MX-42', nameZh: '色源銅紅', nameEn: 'Metal Source Copper Red', hex: '#CC6644', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '銅', '紅'] },
-  { id: 'mx43', code: 'MX-43', nameZh: '色源橙', nameEn: 'Metal Source Orange', hex: '#DD7722', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '橘'] },
-  { id: 'mx44', code: 'MX-44', nameZh: '色源藍', nameEn: 'Metal Source Blue', hex: '#3355AA', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '藍'] },
-  { id: 'mx45', code: 'MX-45', nameZh: '色源黃', nameEn: 'Metal Source Yellow', hex: '#DDAA22', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '黃'] },
-  { id: 'mx47', code: 'MX-47', nameZh: '色源檸檬黃', nameEn: 'Metal Source Lemon Yellow', hex: '#E8D44D', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '黃'] },
-  { id: 'mx48', code: 'MX-48', nameZh: '色源土耳其藍', nameEn: 'Metal Source Turquoise', hex: '#40A4A0', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '藍', '綠'] },
+  // MX 系列 - Astro 金屬色源
+  { id: 'mx41', code: 'MX-41', nameZh: '金屬紅', nameEn: 'Astro Metal Red', hex: '#CC3333', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '紅'] },
+  { id: 'mx42', code: 'MX-42', nameZh: '金屬橘紅', nameEn: 'Astro Metal Orange Red', hex: '#CC6644', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '橘', '紅'] },
+  { id: 'mx43', code: 'MX-43', nameZh: '金屬橙', nameEn: 'Astro Metal Orange', hex: '#DD7722', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '橘'] },
+  { id: 'mx44', code: 'MX-44', nameZh: '金屬藍', nameEn: 'Astro Metal Blue', hex: '#3355AA', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '藍'] },
+  { id: 'mx45', code: 'MX-45', nameZh: '金屬黃', nameEn: 'Astro Metal Yellow', hex: '#DDAA22', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '黃'] },
+  { id: 'mx47', code: 'MX-47', nameZh: '金屬檸檬黃', nameEn: 'Astro Metal Lemon Yellow', hex: '#E8D44D', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '黃'] },
+  { id: 'mx48', code: 'MX-48', nameZh: '金屬土耳其藍', nameEn: 'Astro Metal Turquoise', hex: '#40A4A0', series: 'MX', finish: 'metallic', type: 'lacquer', opacity: 'opaque', volume: 30, tags: ['金屬色源', '藍', '綠'] },
 
   // ============================================
   // T 系列 - 特效/最佳化 (Special Effects)
