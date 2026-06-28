@@ -18,6 +18,7 @@ ${extras}
     {
       "zone": "具體部位名稱如白色裝甲",
       "colorSystem": "該部位的色系質感描述",
+      "primer": "該部位建議的底漆顏色和色號(如 白色底漆MK-白)",
       "basePaint": {"code": "MODO色號", "name": "中文顏色名", "hex": "#色碼"},
       "shadowPaint": {"code": "MODO色號", "name": "中文顏色名", "hex": "#色碼"},
       "highlightPaint": {"code": "MODO色號", "name": "中文顏色名", "hex": "#色碼"},

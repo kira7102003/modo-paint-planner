@@ -128,13 +128,12 @@ export default function ImageAnalyzer() {
       }
       setColors(extracted);
       setState('extracted');
-      await callAi(extracted, modelName);
     } catch (e) {
       const msg = e instanceof Error ? e.message : '圖片分析失敗';
       setError(msg);
       setState('error');
     }
-  }, [modelName, callAi]);
+  }, []);
 
   const handleRefUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -699,8 +698,17 @@ export default function ImageAnalyzer() {
             </button>
           </div>
 
-          {state !== 'idle' && (
-            <button onClick={reset} className="text-xs text-slate-400 hover:text-red-400 transition-colors font-medium">重新開始</button>
+          {/* Action buttons */}
+          {colors.length > 0 && (
+            <div className="flex flex-col sm:flex-row gap-2 pt-2">
+              <button onClick={() => callAi()} disabled={state === 'ai-loading'}
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-bold shadow-lg shadow-violet-200 hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-50">
+                {state === 'ai-loading' ? '⏳ AI 分析中...' : aiResult ? '🔄 重新分析（套用新設定）' : '🚀 開始 AI 分析'}
+              </button>
+              <button onClick={reset} className="px-4 py-3 rounded-xl bg-slate-100 text-slate-500 text-sm font-bold hover:bg-slate-200 transition-all">
+                重新開始
+              </button>
+            </div>
           )}
         </div>
 
@@ -726,16 +734,6 @@ export default function ImageAnalyzer() {
             ))}
           </div>
 
-          {/* Re-analyze button */}
-          {(state === 'done' || state === 'error') && (
-            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <button onClick={() => callAi()}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 text-white text-xs font-bold shadow-md shadow-violet-200 hover:shadow-lg transition-all active:scale-95">
-                重新分析（套用新設定）
-              </button>
-              <p className="text-[10px] text-slate-400">修改上面的風格/底漆/主色/提示詞後，按此重跑 AI 分析，舊結果會保留直到新結果出來</p>
-            </div>
-          )}
         </div>
       )}
 
@@ -1017,6 +1015,15 @@ export default function ImageAnalyzer() {
                           <span className="text-slate-300 text-xl ml-auto">→</span>
                         </div>
                       )}
+                      {(m as unknown as Record<string, string>).primer && (
+                        <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-2.5 border border-slate-200">
+                          <div className="w-12 h-12 rounded-xl border-2 border-white shadow-md bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-lg">🎯</div>
+                          <div>
+                            <div className="text-[9px] text-slate-500 font-bold">底漆 Primer</div>
+                            <div className="text-xs font-bold text-slate-700">{(m as unknown as Record<string, string>).primer}</div>
+                          </div>
+                        </div>
+                      )}
                       {[
                         { label: '底色 Base', paint: m.basePaint, bg: 'bg-sky-50', border: 'border-sky-200', text: 'text-sky-600' },
                         { label: '陰影 Shadow', paint: m.shadowPaint, bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-600' },
@@ -1080,6 +1087,7 @@ export default function ImageAnalyzer() {
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200">
                     <th className="text-left py-2 px-3 text-slate-500 font-bold">部位</th>
+                    <th className="text-left py-2 px-3 text-slate-400 font-bold">底漆</th>
                     <th className="text-left py-2 px-3 text-sky-500 font-bold">底色</th>
                     <th className="text-left py-2 px-3 text-violet-500 font-bold">陰影</th>
                     <th className="text-left py-2 px-3 text-amber-500 font-bold">高光</th>
@@ -1090,6 +1098,7 @@ export default function ImageAnalyzer() {
                   {aiResult.colorMapping.map((m, i) => (
                     <tr key={i} className="border-b border-slate-50 hover:bg-sky-50/30">
                       <td className="py-2 px-3 font-bold text-slate-700">{m.zone}</td>
+                      <td className="py-2 px-3 text-slate-400 text-[10px]">{(m as unknown as Record<string, string>).primer || '-'}</td>
                       <td className="py-2 px-3">
                         <div className="flex items-center gap-1">
                           <div className="w-4 h-4 rounded border border-white shadow-sm" style={{ backgroundColor: m.basePaint.hex }} />
