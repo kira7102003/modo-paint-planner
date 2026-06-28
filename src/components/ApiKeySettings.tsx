@@ -11,7 +11,7 @@ interface KeyState {
 
 const PROVIDERS = [
   { id: 'groq', label: 'Groq', badge: '推薦・免費', badgeColor: 'orange', icon: '⚡', iconBg: 'bg-orange-500', placeholder: 'gsk_... 金鑰', keyUrl: 'https://console.groq.com/keys', keyLabel: '取得 Groq Key（免費・不用綁卡）', desc: '台灣可用・免費・速度極快・設這個就夠了' },
-  { id: 'gemini', label: 'Google Gemini', badge: '台灣受限', badgeColor: 'slate', icon: 'G', iconBg: 'bg-blue-500', placeholder: 'AIza... 金鑰', keyUrl: 'https://aistudio.google.com/apikey', keyLabel: '取得 Gemini Key', desc: '⚠️ 台灣免費額度為 0，需開帳單才能用' },
+  { id: 'gemini', label: 'Google Gemini', badge: '免費', badgeColor: 'blue', icon: 'G', iconBg: 'bg-blue-500', placeholder: 'AIza... 金鑰', keyUrl: 'https://aistudio.google.com/apikey', keyLabel: '取得 Gemini Key（免費）', desc: '台灣需到 Google Cloud 開帳單（綁卡但不扣款），開通後免費額度一樣可用' },
   { id: 'deepseek', label: 'DeepSeek', badge: '便宜', badgeColor: 'green', icon: 'D', iconBg: 'bg-teal-600', placeholder: 'sk-... 金鑰', keyUrl: 'https://platform.deepseek.com/api_keys', keyLabel: '取得 DeepSeek Key', desc: 'V3・極強推理・$0.27/百萬token' },
   { id: 'openai', label: 'ChatGPT (OpenAI)', badge: '備用', badgeColor: 'slate', icon: 'C', iconBg: 'bg-slate-800', placeholder: 'sk-... 金鑰', keyUrl: 'https://platform.openai.com/api-keys', keyLabel: '取得 OpenAI Key（付費）', desc: 'GPT-4o-mini・需綁卡' },
 ] as const;
