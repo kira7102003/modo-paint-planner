@@ -1148,6 +1148,36 @@ export default function ImageAnalyzer() {
           </div>
         </div>
       )}
+
+      {/* Debug: AI response check */}
+      {aiResult && (
+        <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4">
+          <details>
+            <summary className="text-xs font-bold text-slate-400 cursor-pointer">AI 回傳資料檢查（點擊展開）</summary>
+            <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+              {[
+                { key: 'styleScope', label: '風格定調' },
+                { key: 'colorMapping', label: '配色表' },
+                { key: 'sharpnessTechniques', label: '銳利化技法' },
+                { key: 'materialsChecklist', label: '耗材清單' },
+                { key: 'workflow', label: '上色工序' },
+                { key: 'troubleshooting', label: '除錯建議' },
+                { key: 'summary', label: '心得總結' },
+              ].map(({ key, label }) => {
+                const has = !!(aiResult as unknown as Record<string, unknown>)[key];
+                return (
+                  <div key={key} className={`px-2 py-1.5 rounded-lg font-bold ${has ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-red-50 text-red-500 border border-red-200'}`}>
+                    {has ? '✓' : '✕'} {label}
+                  </div>
+                );
+              })}
+              <div className="px-2 py-1.5 rounded-lg bg-slate-100 text-slate-500 border border-slate-200">
+                AI: {aiResult._provider || '?'}
+              </div>
+            </div>
+          </details>
+        </div>
+      )}
     </div>
   );
 }
