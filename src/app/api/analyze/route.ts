@@ -133,8 +133,8 @@ async function callOpenAI(apiKey: string, prompt: string): Promise<string> {
 
 type CallFn = (key: string, prompt: string) => Promise<string>;
 const CHAIN: { id: string; call: CallFn }[] = [
-  { id: 'gemini', call: callGemini },
   { id: 'groq', call: callGroq },
+  { id: 'gemini', call: callGemini },
   { id: 'deepseek', call: callDeepSeek },
   { id: 'openai', call: callOpenAI },
 ];

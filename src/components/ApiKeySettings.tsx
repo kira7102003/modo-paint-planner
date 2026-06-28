@@ -10,8 +10,8 @@ interface KeyState {
 }
 
 const PROVIDERS = [
-  { id: 'gemini', label: 'Google Gemini', badge: '優先', badgeColor: 'blue', icon: 'G', iconBg: 'bg-blue-500', placeholder: 'AIza... 金鑰', keyUrl: 'https://aistudio.google.com/apikey', keyLabel: '取得 Gemini Key（免費）', desc: '2.0 Flash Lite・免費・速度快' },
-  { id: 'groq', label: 'Groq (Llama)', badge: '推薦', badgeColor: 'orange', icon: '⚡', iconBg: 'bg-orange-500', placeholder: 'gsk_... 金鑰', keyUrl: 'https://console.groq.com/keys', keyLabel: '取得 Groq Key（免費）', desc: 'Llama 3.1 8B・免費・131K TPM額度' },
+  { id: 'groq', label: 'Groq', badge: '推薦・免費', badgeColor: 'orange', icon: '⚡', iconBg: 'bg-orange-500', placeholder: 'gsk_... 金鑰', keyUrl: 'https://console.groq.com/keys', keyLabel: '取得 Groq Key（免費・不用綁卡）', desc: '台灣可用・免費・速度極快・設這個就夠了' },
+  { id: 'gemini', label: 'Google Gemini', badge: '台灣受限', badgeColor: 'slate', icon: 'G', iconBg: 'bg-blue-500', placeholder: 'AIza... 金鑰', keyUrl: 'https://aistudio.google.com/apikey', keyLabel: '取得 Gemini Key', desc: '⚠️ 台灣免費額度為 0，需開帳單才能用' },
   { id: 'deepseek', label: 'DeepSeek', badge: '便宜', badgeColor: 'green', icon: 'D', iconBg: 'bg-teal-600', placeholder: 'sk-... 金鑰', keyUrl: 'https://platform.deepseek.com/api_keys', keyLabel: '取得 DeepSeek Key', desc: 'V3・極強推理・$0.27/百萬token' },
   { id: 'openai', label: 'ChatGPT (OpenAI)', badge: '備用', badgeColor: 'slate', icon: 'C', iconBg: 'bg-slate-800', placeholder: 'sk-... 金鑰', keyUrl: 'https://platform.openai.com/api-keys', keyLabel: '取得 OpenAI Key（付費）', desc: 'GPT-4o-mini・需綁卡' },
 ] as const;
@@ -100,7 +100,7 @@ export default function ApiKeySettings() {
       {open && (
         <div className="fixed sm:absolute inset-x-4 sm:inset-x-auto sm:right-0 top-16 sm:top-10 sm:w-[400px] bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-slate-200/50 p-4 sm:p-5 z-50 max-h-[80vh] overflow-y-auto">
           <h3 className="text-sm font-bold text-slate-800 mb-0.5">AI 金鑰設定</h3>
-          <p className="text-[10px] text-slate-400 mb-4">依序嘗試：Gemini → Groq → DeepSeek → ChatGPT</p>
+          <p className="text-[10px] text-slate-400 mb-4">只需設定 Groq（免費）就能用！其他是備用。</p>
 
           {PROVIDERS.map((p, i) => (
             <div key={p.id} className={`${i > 0 ? 'mt-4 pt-4 border-t border-slate-100' : ''}`}>
