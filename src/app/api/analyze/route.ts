@@ -9,7 +9,7 @@ ${extras}
 規則：色號M-xxx/MX-xx/T-xxx。workflow15步。陰影高光要混色比例。提示詞提到的顏色也要配色。`;
 }
 
-async function callWithRetry(fn: () => Promise<string>, retries = 2, delay = 6000): Promise<string> {
+async function callWithRetry(fn: () => Promise<string>, retries = 2, delay = 20000): Promise<string> {
   for (let i = 0; i <= retries; i++) {
     try {
       return await fn();
@@ -39,7 +39,7 @@ async function callGemini(apiKey: string, prompt: string): Promise<string> {
 async function callGroq(apiKey: string, prompt: string): Promise<string> {
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.6, max_tokens: 4096 }),
+    body: JSON.stringify({ model: 'gemma2-9b-it', messages: [{ role: 'user', content: prompt }], temperature: 0.6, max_tokens: 4096 }),
     signal: AbortSignal.timeout(90000) });
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `Groq ${res.status}`); }
   const d = await res.json();

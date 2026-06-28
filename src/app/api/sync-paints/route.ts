@@ -68,7 +68,7 @@ async function callGroq(apiKey: string, prompt: string): Promise<string> {
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-    body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 8192 }),
+    body: JSON.stringify({ model: 'gemma2-9b-it', messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 8192 }),
     signal: AbortSignal.timeout(90000),
   });
   if (!res.ok) throw new Error(`Groq: ${res.status}`);
