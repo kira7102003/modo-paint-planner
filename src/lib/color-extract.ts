@@ -40,9 +40,12 @@ export function extractColorsFromCanvas(
   }
 
   const sorted = Array.from(colorMap.values()).sort((a, b) => b.count - a.count);
+  const totalPixels = sorted.reduce((sum, c) => sum + c.count, 0);
 
+  // Phase 1: pick top clusters by count (main colors)
   const clusters: { r: number; g: number; b: number; count: number }[] = [];
   const minDist = 35;
+  const mainSlots = Math.max(4, maxColors - 4);
 
   for (const color of sorted) {
     const tooClose = clusters.some(c => {
@@ -53,20 +56,82 @@ export function extractColorsFromCanvas(
     });
     if (!tooClose) {
       clusters.push(color);
-      if (clusters.length >= maxColors) break;
+      if (clusters.length >= mainSlots) break;
     }
   }
 
-  const totalPixels = sorted.reduce((sum, c) => sum + c.count, 0);
+  // Phase 2: scan for hue ranges not yet represented (catches small-area colors like red)
+  const hueRanges: { name: string; min: number; max: number; wrap?: boolean }[] = [
+    { name: '紅色', min: 340, max: 20, wrap: true },
+    { name: '橘色', min: 20, max: 45 },
+    { name: '金/黃', min: 45, max: 70 },
+    { name: '綠色', min: 70, max: 170 },
+    { name: '藍色', min: 170, max: 270 },
+    { name: '紫色', min: 270, max: 340 },
+  ];
 
-  return clusters.map(c => {
+  function getHue(r: number, g: number, b: number): number {
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    if (mx === mn) return -1;
+    const sat = mx === 0 ? 0 : (mx - mn) / mx;
+    if (sat < 0.12) return -1; // achromatic
+    let h = 0;
+    if (mx === r) h = (60 * ((g - b) / (mx - mn)) + 360) % 360;
+    else if (mx === g) h = 60 * ((b - r) / (mx - mn)) + 120;
+    else h = 60 * ((r - g) / (mx - mn)) + 240;
+    if (h < 0) h += 360;
+    return h;
+  }
+
+  const coveredHues = new Set<string>();
+  for (const c of clusters) {
+    const h = getHue(c.r, c.g, c.b);
+    if (h < 0) continue;
+    for (const range of hueRanges) {
+      const inRange = range.wrap
+        ? (h >= range.min || h < range.max)
+        : (h >= range.min && h < range.max);
+      if (inRange) coveredHues.add(range.name);
+    }
+  }
+
+  // Find best representative for each missing hue range
+  for (const range of hueRanges) {
+    if (coveredHues.has(range.name)) continue;
+    if (clusters.length >= maxColors) break;
+
+    let best: { r: number; g: number; b: number; count: number } | null = null;
+    for (const color of sorted) {
+      if (color.count < 3) continue; // at least 3 pixels
+      const h = getHue(color.r, color.g, color.b);
+      if (h < 0) continue;
+      const inRange = range.wrap
+        ? (h >= range.min || h < range.max)
+        : (h >= range.min && h < range.max);
+      if (inRange) {
+        const tooClose = clusters.some(c => {
+          const dr = c.r - color.r;
+          const dg = c.g - color.g;
+          const db = c.b - color.b;
+          return Math.sqrt(dr * dr + dg * dg + db * db) < 25;
+        });
+        if (!tooClose) { best = color; break; }
+      }
+    }
+    if (best) clusters.push(best);
+  }
+
+  // Sort: largest area first
+  clusters.sort((a, b) => b.count - a.count);
+
+  return clusters.slice(0, maxColors).map(c => {
     const hex = '#' + [c.r, c.g, c.b].map(v => Math.min(255, v).toString(16).padStart(2, '0')).join('');
     return {
       hex,
       r: c.r,
       g: c.g,
       b: c.b,
-      percentage: Math.round(c.count / totalPixels * 100),
+      percentage: Math.max(1, Math.round(c.count / totalPixels * 100)),
       label: guessColorLabel(c.r, c.g, c.b),
     };
   });
