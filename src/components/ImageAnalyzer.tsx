@@ -60,7 +60,7 @@ export default function ImageAnalyzer() {
   const [showPresets, setShowPresets] = useState(false);
   const [presetName, setPresetName] = useState('');
   const [primaryColor, setPrimaryColor] = useState('');
-  const [primaryRatio, setPrimaryRatio] = useState(50);
+  const [primaryRatio, setPrimaryRatio] = useState(75);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const refFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -945,33 +945,58 @@ export default function ImageAnalyzer() {
                     </div>
                   </div>
 
-                  {/* Color flow: Original → MODO */}
-                  <div className="flex items-center gap-2 mb-3 flex-wrap">
-                    {origColor && (
-                      <>
-                        <div className="flex items-center gap-1.5 bg-white rounded-lg px-2 py-1.5 border border-slate-200">
-                          <div className="w-6 h-6 rounded-md border border-slate-200" style={{ backgroundColor: origColor.hex }} />
+                  {/* Color blocks + layered preview */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                    {/* Left: individual colors */}
+                    <div className="space-y-2">
+                      {origColor && (
+                        <div className="flex items-center gap-3 bg-white rounded-xl p-2.5 border border-slate-200">
+                          <div className="w-12 h-12 rounded-xl border-2 border-white shadow-md" style={{ backgroundColor: origColor.hex }} />
                           <div>
-                            <div className="text-[9px] text-slate-400">圖片原色</div>
-                            <div className="text-[10px] font-mono font-bold text-slate-600">{origColor.hex}</div>
+                            <div className="text-[9px] text-slate-400 font-bold">圖片原色</div>
+                            <div className="text-xs font-mono font-bold text-slate-600">{origColor.hex}</div>
+                            <div className="text-[10px] text-slate-400">{origColor.label} {origColor.percentage}%</div>
+                          </div>
+                          <span className="text-slate-300 text-xl ml-auto">→</span>
+                        </div>
+                      )}
+                      {[
+                        { label: '底色 Base', paint: m.basePaint, bg: 'bg-sky-50', border: 'border-sky-200', text: 'text-sky-600' },
+                        { label: '陰影 Shadow', paint: m.shadowPaint, bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-600' },
+                        { label: '高光 Highlight', paint: m.highlightPaint, bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-600' },
+                      ].map(({ label, paint, bg, border, text }) => (
+                        <div key={label} className={`flex items-center gap-3 ${bg} rounded-xl p-2.5 border ${border}`}>
+                          <div className="w-12 h-12 rounded-xl border-2 border-white shadow-md" style={{ backgroundColor: paint.hex }} />
+                          <div>
+                            <div className={`text-[9px] ${text} font-bold`}>{label}</div>
+                            <div className="text-xs font-bold text-slate-700">{paint.code} {paint.name}</div>
+                            <div className="text-[10px] font-mono text-slate-400">{paint.hex}</div>
                           </div>
                         </div>
-                        <span className="text-slate-300 text-lg">→</span>
-                      </>
-                    )}
-                    {[
-                      { label: '底色', paint: m.basePaint, color: 'sky' },
-                      { label: '陰影', paint: m.shadowPaint, color: 'violet' },
-                      { label: '高光', paint: m.highlightPaint, color: 'amber' },
-                    ].map(({ label, paint, color }) => (
-                      <div key={label} className="flex items-center gap-1.5 bg-white rounded-lg px-2 py-1.5 border border-slate-200">
-                        <div className="w-6 h-6 rounded-md border border-white shadow-sm" style={{ backgroundColor: paint.hex }} />
-                        <div>
-                          <div className={`text-[9px] text-${color}-500 font-bold`}>{label}</div>
-                          <div className="text-[10px] font-mono font-bold text-slate-600">{paint.code}</div>
-                        </div>
+                      ))}
+                    </div>
+
+                    {/* Right: layered preview */}
+                    <div className="bg-white rounded-xl p-3 border border-slate-200 flex flex-col items-center justify-center gap-2">
+                      <span className="text-[9px] font-bold text-slate-400 uppercase">疊色效果預覽</span>
+                      <div className="relative w-full max-w-[180px] aspect-square">
+                        {/* Shadow layer */}
+                        <div className="absolute inset-0 rounded-2xl" style={{ backgroundColor: m.shadowPaint.hex }} />
+                        {/* Base layer */}
+                        <div className="absolute inset-[15%] rounded-xl" style={{ backgroundColor: m.basePaint.hex }} />
+                        {/* Highlight layer */}
+                        <div className="absolute inset-[35%] rounded-lg" style={{ backgroundColor: m.highlightPaint.hex }} />
+                        {/* Labels */}
+                        <span className="absolute bottom-1 left-2 text-[8px] font-bold px-1 py-0.5 rounded bg-white/80 text-slate-500">{m.shadowPaint.code}</span>
+                        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px] font-black px-1.5 py-0.5 rounded bg-white/80 text-slate-700">{m.basePaint.code}</span>
+                        <span className="absolute top-[38%] right-[38%] text-[8px] font-bold px-1 py-0.5 rounded bg-white/80 text-slate-500">{m.highlightPaint.code}</span>
                       </div>
-                    ))}
+                      <div className="flex gap-1 text-[8px] text-slate-400">
+                        <span>外圈=陰影</span>
+                        <span>中間=底色</span>
+                        <span>內圈=高光</span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Text explanation */}
